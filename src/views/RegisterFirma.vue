@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col left">
         <el-card class="card mx-auto registerForm">
-          <h3>Înregistrare utilizator 🌿</h3>
+          <h3>Înregistrare firmă nouă 🛒</h3>
           <el-form
             :model="dateInregistrare"
             status-icon
@@ -32,11 +32,18 @@
                   v-model="dateInregistrare.nume"
                 ></el-input>
               </el-form-item>
-              <el-form-item prop="prenume">
-                Prenume
+              <el-form-item prop="adresa">
+                Adresa
                 <el-input
-                  placeholder="Prenumele dvs."
-                  v-model="dateInregistrare.prenume"
+                  placeholder="Adresa dvs."
+                  v-model="dateInregistrare.adresa"
+                ></el-input>
+              </el-form-item>
+              <el-form-item prop="cui">
+                CUI
+                <el-input
+                  placeholder="CUI"
+                  v-model="dateInregistrare.cui"
                 ></el-input>
               </el-form-item>
             </el-form>
@@ -73,7 +80,7 @@
       </div>
       <div class="col right">
         <p>Ne bucurăm că doriți să vă alăturați 🌿</p>
-        <img src="../assets/register_user_photo.png" />
+        <img src="../assets/register_photo.png" />
       </div>
     </div>
   </div>
@@ -106,7 +113,8 @@ export default {
         parola: "",
         parolaConfirm: "",
         nume: "",
-        prenume: "",
+        cui: "",
+        adresa: "",
       },
       rules: {
         numeUtilizator: [
@@ -125,39 +133,37 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["register"]),
+    ...mapActions(["registerFirma"]),
     inregistrareUtilizator() {
       let utilizator = {
         numeUtilizator: this.dateInregistrare.numeUtilizator,
         email: this.dateInregistrare.email,
         parola: this.dateInregistrare.parola,
         parola_confirmare: this.dateInregistrare.parolaConfirm,
-        utilizator: {
+        firma: {
           nume: this.dateInregistrare.nume,
-          prenume: this.dateInregistrare.prenume,
+          cui: this.dateInregistrare.cui,
+          adresa: this.dateInregistrare.adresa,
         },
       };
-      this.register(utilizator)
-        .then((res) => {
-          if (res.data.succes) {
-            this.$router.push("login");
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      this.registerFirma(utilizator).then((res) => {
+        if (res.data.succes) {
+          this.$router.push("login");
+        }
+      });
     },
   },
 };
 </script>
 
 <style scoped>
-.registerForm {
-  width: 48vw;
-}
 .left {
   margin-left: 40px;
 }
+.registerForm {
+  width: 53vw;
+}
+
 @media (max-width: 1020px) {
   .right {
     display: none;
@@ -170,6 +176,7 @@ export default {
   }
 }
 .right {
+  width: 30vw;
   margin-right: 40px;
 }
 .el-button {
@@ -192,7 +199,7 @@ img {
   -moz-user-select: none;
   -khtml-user-select: none;
   -webkit-user-select: none;
-  width: 28vw;
+  width: 32vw;
 }
 h3 {
   font-family: "Raleway", sans-serif;

@@ -1,25 +1,21 @@
 <template>
-  <div class="profile">
-    <h1>Profil</h1>
-    <div class="card">
-      <ul class="list-group">
-        <li class="list-group-item">Email : {{ user.email }}</li>
-        <li class="list-group-item">
-          Nume utilizator :{{ user.numeUtilizator }}
-        </li>
-        <li class="list-group-item">
-          Nume, prenume {{ user.utilizator.nume }},
-          {{ user.utilizator.prenume }}
-        </li>
-      </ul>
+  <div>
+    <div v-if="rolUtilizator == 'user'">
+      <ProfileUser v-bind:user="user" />
+    </div>
+    <div v-if="rolUtilizator == 'firma' && esteFirma">
+      <ProfileFirma v-bind:user="user" />
     </div>
   </div>
 </template>
 
 <script>
+import ProfileUser from "../components/ProfileUser";
+import ProfileFirma from "../components/ProfileFirma";
 import { mapActions, mapGetters } from "vuex";
 export default {
-  computed: mapGetters(["user"]),
+  components: { ProfileUser, ProfileFirma },
+  computed: mapGetters(["user", "esteLogat", "rolUtilizator", "esteFirma"]),
   methods: {
     ...mapActions(["getProfile"]),
   },
@@ -29,5 +25,4 @@ export default {
 };
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>
