@@ -35,6 +35,10 @@ export default {
   height: 100%;
 }
 
+.el-upload-dragger {
+  width: 100% !important;
+}
+
 #nav {
   padding: 30px;
   a {

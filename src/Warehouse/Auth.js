@@ -72,6 +72,19 @@ const actions = {
     return res;
   },
 
+  //Adaugare produs
+
+  async addProduct({commit}, productData) {
+    let res = await axios.post(
+      "http://localhost:8081/api/firma/produs",
+      productData
+    );
+    if (res.data.success !== undefined) {
+      console.log('success')
+    }
+    return res;
+  },
+
   //Delogarea utilizatorului
 
   async logout({ commit }) {

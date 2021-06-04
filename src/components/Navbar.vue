@@ -14,7 +14,7 @@
     >
       <span class="navbar-toggler-icon"></span>
     </button>
-
+    <!-- Aici sunt elementele pentru utilziatorii care nu sunt logati -->
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav ml-auto">
         <li
@@ -30,6 +30,16 @@
           :class="[activeItem == 'about' ? 'active' : 'notActive']"
         >
           <router-link class="nav-link barbtn" to="/about">Despre</router-link>
+        </li>
+
+        <li
+          class="nav-item"
+          v-on:click="setActive('produse')"
+          :class="[activeItem == 'produse' ? 'active' : 'notActive']"
+        >
+          <router-link class="nav-link barbtn" to="/produse"
+            >Vizualizează produse</router-link
+          >
         </li>
 
         <li v-if="!esteLogat" class="nav-item dropdown">
@@ -146,7 +156,7 @@ export default {
 </script>
 <style scoped lang="scss">
 .logo {
-  width: 100px;
+  width: 80px;
   margin-left: 30%;
 }
 .navbar-toggler {
@@ -181,7 +191,7 @@ export default {
   border-radius: 30px;
   font-family: "Raleway", sans-serif;
   font-weight: 500;
-  font-size: 16px;
+  font-size: 12px;
   border-radius: 8px;
   transition: 0.5s;
 }
@@ -198,8 +208,21 @@ export default {
 .nav-item.dropdown.show {
   transition: 0.3s all;
 }
-.dropdown {
+.dropdown-menu {
+  margin-left: -40px;
+  margin-top: 10px;
   transition: 0.3s all;
+}
+
+@media (max-width: 990px) {
+  .dropdown-menu {
+    margin-left: 0px;
+    margin-top: 0px;
+  }
+}
+
+.dropdown-item {
+  font-size: 12px;
 }
 
 .barbtn {
