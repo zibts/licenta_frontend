@@ -85,6 +85,11 @@ const actions = {
     return res;
   },
 
+  async getProductFirma() {
+    let res = await axios.get("http://localhost:8081/api/firma/produse");
+    return res.data;
+  },
+
   //Delogarea utilizatorului
 
   async logout({ commit }) {

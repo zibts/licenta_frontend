@@ -11,7 +11,7 @@
     >
       <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
-          <AddProductForm />
+          <AddProductForm @added="refreshList()" />
         </div>
       </div>
     </div>
@@ -30,11 +30,20 @@
       >
     </el-row>
     <el-row type="flex" class="row-bg" justify="center">
-      <el-col v-for="(o, index) in 10" :key="o" :offset="index">
-        <el-card :body-style="{ padding: '20px' }">
-          <img src="../assets/tomato.jpg" class="image" />
+      <el-col v-for="(o, index) in unFilteredProduse" :key="index">
+        <el-card :body-style="{ padding: '20px', height: '400px' }">
+          <div :style="getPhotos(o.img)"></div>
           <div style="padding: 14px">
-            <span>Yummy hamburger</span>
+            <h4>{{ o.numeProdus }}</h4>
+            <div class="details" style="display: flex; flex-direction: column">
+              <span style="font-size: 14px; margin: 5px"
+                >Prețul: {{ o.pretProdus }} RON</span
+              >
+              <span style="font-size: 12px; color: gray; margin: 5px"
+                >Expiră: {{ o.dataExpirarii }}</span
+              >
+            </div>
+
             <div class="bottom clearfix">
               <el-button type="primary">Modificare</el-button>
             </div>
@@ -47,17 +56,47 @@
 
 <script>
 import AddProductForm from "../components/AddProductForm";
+import { mapActions, mapGetters } from "vuex";
 export default {
   components: { AddProductForm },
+
+  computed: mapGetters(["user", "esteLogat", "rolUtilizator", "esteFirma"]),
   data() {
     return {
       currentDate: new Date(),
+      unFilteredProduse: [],
     };
+  },
+  methods: {
+    ...mapActions(["getProductFirma"]),
+    getPhotos(filename) {
+      // return { backgroundColor: "yellow", height: "200px" };
+      return {
+        backgroundImage: `url("/assets/products/${filename}")`,
+        height: "200px",
+        backgroundSize: "cover",
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "center center",
+        borderRadius: "20px",
+        border: "2px solid #27ae60 ",
+        boxShadow: " inset 0px 0px 10px 1px rgba(0,0,0,0.2)",
+      };
+    },
+    async refreshList() {
+      this.unFilteredProduse = await this.getProductFirma();
+    },
+  },
+  async created() {
+    this.unFilteredProduse = await this.getProductFirma();
+    console.log(this.unFilteredProduse);
   },
 };
 </script>
 
 <style>
+* {
+  font-family: "Raleway", sans-serif;
+}
 .el-row {
   display: flex;
   flex-direction: row;

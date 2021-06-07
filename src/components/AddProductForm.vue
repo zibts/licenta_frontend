@@ -1,6 +1,14 @@
 <template>
   <form class="formBody">
-    <div class="card mb-3" style="height: 70vh; overflow: auto">
+    <div
+      class="card mb-3"
+      style="
+        height: 75vh;
+        margin-top: -20px;
+        transition: 0.3s all;
+        overflow: auto;
+      "
+    >
       <div class="row">
         <div class="col-md-8">
           <h2>Adauga produs 🛒</h2>
@@ -114,7 +122,6 @@
               </div>
             </div>
           </div>
-          <hr />
         </div>
         <div class="col-md-4">
           <div class="upload" style="margin-top: 100px">
@@ -158,10 +165,19 @@
               v-model="dateProdusNou.cantitateDisponibila"
             />
           </div>
-          <el-button type="primary" style="margin: 7px">Renunță</el-button>
+          <el-button
+            type="primary"
+            data-toggle="modal"
+            data-target="#exampleModalLong"
+            style="margin: 7px"
+            @click="renunta"
+            >Renunță</el-button
+          >
           <el-button
             type="primary"
             style="margin: 7px"
+            data-toggle="modal"
+            data-target="#exampleModalLong"
             @click="adaugareProdus()"
             >Adaugă</el-button
           >
@@ -200,12 +216,22 @@ export default {
       this.dateProdusNou.categorieProdus = this.selectedCategory;
       console.log(this.dateProdusNou);
     },
-
+    renunta() {
+      this.selectedCategory = "";
+      this.dateProdusNou = {
+        numeProdus: "",
+        descriereProdus: "",
+        pretProdus: "",
+        categorieProdus: "",
+        dataExpirarii: "",
+        cantitateDisponibila: 0,
+      };
+      this.$emit("added");
+    },
     adaugareProdus() {
       console.log(this.img);
       this.addProdus();
       let fd = new FormData();
-      fd.append("furnizorId", "60b8fbc89875760f40896025");
       fd.append("numeProdus", this.dateProdusNou.numeProdus);
       fd.append("descriereProdus", this.dateProdusNou.descriereProdus);
       fd.append("pretProdus", this.dateProdusNou.pretProdus);
@@ -217,6 +243,7 @@ export default {
         .then((res) => {
           if (res.data.succes) {
             console.log("success");
+            this.$emit("added");
           }
         })
         .catch((err) => {
@@ -250,16 +277,16 @@ ul {
 }
 h2 {
   display: flex;
-  font-size: 28px;
+  font-size: 20px;
   margin-left: 5%;
   margin-right: 5%;
-  padding: 20px;
+  padding: 22px;
 }
 h4 {
   display: flex;
   margin-left: 10%;
   margin-right: 10%;
-  font-size: 16px;
+  font-size: 14px;
 }
 @media (max-width: 760px) {
   .upload {
@@ -272,12 +299,12 @@ li {
   align-items: center;
   margin: 10px;
   min-width: 17%;
-  height: 46px;
+  height: 36px;
   text-decoration: none;
   background: #e9e9e9;
   box-sizing: border-box;
   border-radius: 31px;
-  font-size: 13px;
+  font-size: 12px;
 }
 input {
   margin-left: 7%;
@@ -285,14 +312,18 @@ input {
   background: #f7f7f7;
   border: 3px solid #dfdfdf;
   border-radius: 5px;
+  font-size: 12px;
 }
 textarea {
   margin-left: 7%;
-
+  font-size: 12px;
   margin-right: 7%;
   background: #f7f7f7;
   border: 3px solid #dfdfdf;
   border-radius: 5px;
+}
+.input-group-text {
+  font-size: 12px;
 }
 .form-control:focus {
   border-color: #206b34;
