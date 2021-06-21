@@ -4,6 +4,15 @@ import router from "./router";
 import store from "./store";
 import axios from "axios";
 import Element from 'element-ui'
+import InfiniteLoading from 'vue-infinite-loading'
+import moment from 'moment'
+
+import 'moment/locale/ro';
+
+moment.locale('ro');
+
+Vue.prototype.moment = moment
+
 
 Vue.config.productionTip = false;
 
@@ -13,6 +22,8 @@ Vue.prototype.$http = axios;
 const token = localStorage.getItem("token");
 
 Vue.use(Element)
+Vue.use(InfiniteLoading)
+
 
 //Daca este token-ul, implementam header-ul de autorizare de la axios
 if (token) {

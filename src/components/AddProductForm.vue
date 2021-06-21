@@ -168,7 +168,7 @@
           <el-button
             type="primary"
             data-toggle="modal"
-            data-target="#exampleModalLong"
+            data-target="#addProduct"
             style="margin: 7px"
             @click="renunta"
             >Renunță</el-button
@@ -177,7 +177,7 @@
             type="primary"
             style="margin: 7px"
             data-toggle="modal"
-            data-target="#exampleModalLong"
+            data-target="#addProduct"
             @click="adaugareProdus()"
             >Adaugă</el-button
           >
@@ -216,6 +216,7 @@ export default {
       this.dateProdusNou.categorieProdus = this.selectedCategory;
       console.log(this.dateProdusNou);
     },
+
     renunta() {
       this.selectedCategory = "";
       this.dateProdusNou = {
@@ -237,6 +238,10 @@ export default {
       fd.append("pretProdus", this.dateProdusNou.pretProdus);
       fd.append("categorieProdus", this.selectedCategory);
       fd.append("dataExpirarii", this.dateProdusNou.dataExpirarii);
+      fd.append(
+        "cantitateDisponibila",
+        this.dateProdusNou.cantitateDisponibila
+      );
       fd.append("image", this.img.raw);
 
       this.addProduct(fd)

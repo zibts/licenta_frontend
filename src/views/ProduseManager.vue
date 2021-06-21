@@ -3,7 +3,7 @@
     <div
       class="modal fade bd-example-modal-xl"
       style="margin-top: 100px"
-      id="exampleModalLong"
+      id="addProduct"
       tabindex="-1"
       role="dialog"
       aria-labelledby="exampleModalLongTitle"
@@ -22,7 +22,7 @@
           type="primary"
           class="btn btn-primary"
           data-toggle="modal"
-          data-target="#exampleModalLong"
+          data-target="#addProduct"
         >
           <i class="fas fa-plus" style="margin: 5px"></i>Adaugă
           produs</el-button
@@ -30,40 +30,66 @@
       >
     </el-row>
     <el-row type="flex" class="row-bg" justify="center">
-      <el-col v-for="(o, index) in unFilteredProduse" :key="index">
+      <el-col v-for="(produs, index) in unFilteredProduse" :key="index">
         <el-card :body-style="{ padding: '20px', height: '400px' }">
-          <div :style="getPhotos(o.img)"></div>
+          <div :style="getPhotos(produs.img)"></div>
           <div style="padding: 14px">
-            <h4>{{ o.numeProdus }}</h4>
+            <h4>{{ produs.numeProdus }}</h4>
             <div class="details" style="display: flex; flex-direction: column">
               <span style="font-size: 14px; margin: 5px"
-                >Prețul: {{ o.pretProdus }} RON</span
+                >Prețul: {{ produs.pretProdus }} RON</span
               >
               <span style="font-size: 12px; color: gray; margin: 5px"
-                >Expiră: {{ o.dataExpirarii }}</span
+                >Expiră: {{ produs.dataExpirarii }}</span
               >
             </div>
 
             <div class="bottom clearfix">
+              <el-button
+                type="primary"
+                data-toggle="modal"
+                data-target="#produseInfo"
+                @click="localProdus = produs"
+                >Informații</el-button
+              >
+
               <el-button type="primary">Modificare</el-button>
             </div>
           </div>
         </el-card>
       </el-col>
     </el-row>
+
+    <div
+      class="modal fade bd-example-modal-xl"
+      style="margin-top: 100px"
+      id="produseInfo"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalLongTitle"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+          <InfoProductFurnizorForm :produs="localProdus" />
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 import AddProductForm from "../components/AddProductForm";
+import InfoProductFurnizorForm from "../components/InfoProductFurnizorForm";
 import { mapActions, mapGetters } from "vuex";
 export default {
-  components: { AddProductForm },
+  components: { AddProductForm, InfoProductFurnizorForm },
 
   computed: mapGetters(["user", "esteLogat", "rolUtilizator", "esteFirma"]),
   data() {
     return {
       currentDate: new Date(),
+      localProdus: {},
       unFilteredProduse: [],
     };
   },

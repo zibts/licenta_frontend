@@ -85,8 +85,15 @@ const actions = {
     return res;
   },
 
+  //obtinerea produsului
+
   async getProductFirma() {
     let res = await axios.get("http://localhost:8081/api/firma/produse");
+    return res.data;
+  },
+
+  async getAllProduse() {
+    let res = await axios.get("http://localhost:8081/api/produse");
     return res.data;
   },
 
