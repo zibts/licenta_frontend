@@ -54,8 +54,7 @@ export default {
 }
 @media (max-width: 1000px) {
   .searchbar {
-    width: 75%;
-    margin-right: 0px;
+    width: 85%;
     input {
     }
     .searchicon {

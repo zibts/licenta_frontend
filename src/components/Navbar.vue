@@ -19,13 +19,6 @@
       <ul class="navbar-nav ml-auto">
         <li
           class="nav-item"
-          v-on:click="setActive('home')"
-          :class="[activeItem == 'home' ? 'active' : 'notActive']"
-        >
-          <router-link class="nav-link barbtn" to="/">Acasă</router-link>
-        </li>
-        <li
-          class="nav-item"
           v-on:click="setActive('about')"
           :class="[activeItem == 'about' ? 'active' : 'notActive']"
         >
