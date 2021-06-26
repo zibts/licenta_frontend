@@ -1,7 +1,12 @@
 <template>
   <nav class="navbar navbar-expand-lg navbar-dark">
     <router-link class="navbar-brand" to="/">
-      <img class="logo" src="../assets/logo.png" alt="Savipt" />
+      <img
+        v-on:click="setActive('about')"
+        class="logo"
+        src="../assets/logo.png"
+        alt="Savipt"
+      />
     </router-link>
     <button
       class="navbar-toggler"
@@ -22,7 +27,7 @@
           v-on:click="setActive('about')"
           :class="[activeItem == 'about' ? 'active' : 'notActive']"
         >
-          <router-link class="nav-link barbtn" to="/about">Despre</router-link>
+          <router-link class="nav-link barbtn" to="/">Despre</router-link>
         </li>
 
         <li
@@ -99,6 +104,14 @@
               v-if="esteFirma && rolUtilizator == 'firma'"
             >
               <router-link to="/produsemanager">Produsele mele</router-link>
+            </li>
+            <li
+              class="dropdown-item"
+              v-on:click="setActive('rez-mele')"
+              :class="[activeItem == 'rez-mele' ? 'active' : 'notActive']"
+              v-if="!esteFirma && rolUtilizator == 'user'"
+            >
+              <router-link to="/rezervariuser">Rezervările mele</router-link>
             </li>
             <li
               class="dropdown-item"

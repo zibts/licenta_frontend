@@ -160,7 +160,29 @@ export default {
   },
 };
 </script>
+
 <style scoped>
+.btn {
+  background-color: #27ae60;
+  border-color: #27ae60;
+}
+.btn:focus,
+.btn {
+  background-color: #1b8448;
+  border-color: #1b8448;
+}
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active,
+.btn-primary:active:focus:not(:disabled):not(.disabled),
+.btn:focus,
+.btn:active,
+.btn:hover {
+  background-color: #27ae60;
+  border-color: #27ae60;
+  box-shadow: none !important;
+  outline: 0;
+}
 .active {
   border: 2px solid #206b34;
 }

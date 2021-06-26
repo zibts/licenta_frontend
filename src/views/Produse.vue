@@ -40,37 +40,45 @@
             v-for="(produs, index) in searchValueShow ? filteredProduse : list"
             :key="index"
           >
-            <el-card
-              :body-style="{
-                padding: '20px',
-                height: '270px',
-              }"
+            <div
+              class="produseCard"
+              v-on:click="
+                $router.push({ path: `produs/${produs._id.toString()}` })
+              "
             >
-              <div :style="getPhotos(produs.img)"></div>
-              <div style="padding: 14px">
-                <h4 style="font-size: 16px; font-weight: bold">
-                  {{ produs.numeProdus }}
-                </h4>
-                <div
-                  class="details"
-                  style="display: flex; flex-direction: column"
-                >
-                  <span style="font-size: 12px; margin: 5px; font-weight: bold"
-                    >Prețul: {{ produs.pretProdus }} RON</span
+              <el-card
+                :body-style="{
+                  padding: '20px',
+                  height: '270px',
+                }"
+              >
+                <div :style="getPhotos(produs.img)"></div>
+                <div style="padding: 14px">
+                  <h4 style="font-size: 16px; font-weight: bold">
+                    {{ produs.numeProdus }}
+                  </h4>
+                  <div
+                    class="details"
+                    style="display: flex; flex-direction: column"
                   >
-                  <span
-                    style="
-                      font-size: 12px;
-                      color: red;
-                      font-weight: bold;
-                      margin: 5px;
-                    "
-                    >Expiră:
-                    {{ moment(produs.dataExpirarii).format("LLL") }}</span
-                  >
+                    <span
+                      style="font-size: 12px; margin: 5px; font-weight: bold"
+                      >Prețul: {{ produs.pretProdus }} RON</span
+                    >
+                    <span
+                      style="
+                        font-size: 12px;
+                        color: red;
+                        font-weight: bold;
+                        margin: 5px;
+                      "
+                      >Expiră:
+                      {{ moment(produs.dataExpirarii).format("LLL") }}</span
+                    >
+                  </div>
                 </div>
-              </div>
-            </el-card>
+              </el-card>
+            </div>
           </el-col>
         </div>
         <div class="infinite-wrapper">

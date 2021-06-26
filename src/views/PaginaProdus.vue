@@ -1,27 +1,161 @@
 <template>
-  <form class="formBody">
+  <form class="formBody d-flex justify-content-center">
     <div
       class="card mb-3"
       style="
-        height: 75vh;
+        height: 80vh;
         margin-top: -20px;
         transition: 0.3s all;
         overflow: auto;
+        width: 85%;
       "
     >
-      <div class="row">
-        <div class="col-md-4">
-          <div :style="getPhotos(produs.img)"></div>
+      <div class="row d-flex justify-content-center">
+        <!-- avatar -->
+        <div class="col-lg-5 d-flex justify-content-center flex-column">
+          <div id="#photoDiv" :style="getPhotos(produs.img)"></div>
+          <h2 style="padding-bottom: 5px; color: black">
+            {{ produs.numeProdus }}
+            🛒
+          </h2>
+          <h3 style="color: green">
+            {{ produs.pretProdus }} <span style="color: black">RON</span>
+          </h3>
+          <el-button
+            v-if="rolUtilizator == 'user'"
+            type="primary"
+            style="margin: 7px"
+            data-toggle="modal"
+            data-target="#exampleModal"
+            >Rezervă produs</el-button
+          >
         </div>
-        <div class="col-md-8">
-          <h2>{{ produs.numeProdus }} 🛒</h2>
+        <!-- @click="rezervareProdus()" -->
+
+        <div
+          class="modal fade"
+          id="exampleModal"
+          tabindex="-1"
+          role="dialog"
+          aria-labelledby="exampleModalLabel"
+          aria-hidden="true"
+          style="margin-top: 200px"
+        >
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                  Introduceți cantitatea și confirmați rezervarea
+                </h5>
+                <button
+                  type="button"
+                  class="close"
+                  data-dismiss="modal"
+                  aria-label="Close"
+                >
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <div class="input-group mb-3">
+                  <span
+                    class="input-group-text"
+                    id="basic-addon3"
+                    style="margin-left: 7%"
+                    >Cantitate</span
+                  >
+                  <input
+                    type="text"
+                    style="margin-left: 0 !important"
+                    class="form-control"
+                    placeholder="Introduceti cantitatea disponibila"
+                    aria-label="cant"
+                    aria-describedby="basic-addon3"
+                    v-model="this.cantitateRezervata"
+                  />
+                </div>
+                <hr />
+                <h6 class="modal-title" id="exampleModalLabel">
+                  Adresa și locația furnizorului
+                </h6>
+                <div class="input-group mb-3">
+                  <span
+                    class="input-group-text"
+                    id="basic-addon2"
+                    style="margin-left: 7%"
+                    >Adr.</span
+                  >
+                  <div
+                    class="form-control"
+                    style="
+                      margin-right: 7%;
+                      background: #f7f7f7;
+                      border: 3px solid #dfdfdf;
+                      border-radius: 5px;
+                      font-size: 16px;
+                    "
+                  >
+                    {{ furnizor.adresa }}
+                  </div>
+                </div>
+                <div class="input-group mb-3">
+                  <span
+                    class="input-group-text"
+                    id="basic-addon2"
+                    style="margin-left: 7%"
+                    >Loc.</span
+                  >
+                  <div
+                    class="form-control"
+                    style="
+                      margin-right: 7%;
+                      background: #f7f7f7;
+                      border: 3px solid #dfdfdf;
+                      border-radius: 5px;
+                      font-size: 16px;
+                    "
+                  >
+                    {{ furnizor.localitate }}
+                  </div>
+                </div>
+              </div>
+
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-dismiss="modal"
+                >
+                  Renunțare
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-primary"
+                  data-dismiss="modal"
+                  @click="rezervareProdus()"
+                >
+                  Confirmare
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- info -->
+        <div class="col-lg-4">
+          <h3 style="margin-top: 20px">Informații produs</h3>
+          <hr />
           <div
             class="row"
             style="display: flex; justify-content: center; align-items: center"
           >
             <h4>Categoria :</h4>
             <ul>
-              <li>Carne</li>
+              <li>
+                {{
+                  produs.categorieProdus.charAt(0).toUpperCase() +
+                  produs.categorieProdus.slice(1)
+                }}
+              </li>
             </ul>
           </div>
           <hr />
@@ -36,27 +170,10 @@
             ></textarea>
           </div>
           <hr />
-          <h4>Prețul și data expirării</h4>
+          <h4>Data expirării si cantitatea disponibila</h4>
+
           <div class="row">
             <div class="col">
-              <div class="input-group mb-3">
-                <span
-                  class="input-group-text"
-                  id="basic-addon1"
-                  style="margin-left: 7%"
-                  >$</span
-                >
-                <input
-                  type="text"
-                  style="margin-left: 0 !important"
-                  class="form-control"
-                  placeholder="Pret"
-                  aria-label="pret"
-                  readonly
-                  aria-describedby="basic-addon1"
-                  v-model="produs.pretProdus"
-                />
-              </div>
               <div class="input-group mb-3">
                 <span
                   class="input-group-text"
@@ -68,10 +185,10 @@
                   type="text"
                   style="margin-left: 0 !important"
                   class="form-control"
-                  placeholder="Introduceti cantitatea disponibila"
-                  aria-label="cant"
-                  aria-describedby="basic-addon3"
+                  placeholder="Nu sunt informatii"
+                  aria-label="Cantitate disponibila"
                   readonly
+                  aria-describedby="basic-addon3"
                   v-model="produs.cantitateDisponibila"
                 />
               </div>
@@ -82,39 +199,125 @@
                   style="margin-left: 7%"
                   ><i class="fa fa-calendar-times-o" aria-hidden="true"></i
                 ></span>
-                <input
-                  type="text"
-                  style="margin-left: 0 !important"
+                <div
                   class="form-control"
-                  placeholder="Pret"
-                  aria-label="pret"
-                  readonly
-                  aria-describedby="basic-addon1"
-                  v-model="produs.dataExpirarii"
-                />
+                  style="
+                    margin-right: 7%;
+                    background: #f7f7f7;
+                    border: 3px solid #dfdfdf;
+                    border-radius: 5px;
+                    font-size: 16px;
+                  "
+                >
+                  {{ moment(produs.dataExpirarii).format("LLL") }}
+                </div>
               </div>
             </div>
           </div>
-          <div class="row">
-            <div class="col">
-              <el-button
-                type="primary"
-                data-toggle="modal"
-                data-target="#exampleModalLong"
-                style="margin: 7px"
-                @click="renunta"
-                >Înapoi</el-button
-              >
-              <el-button
-                type="primary"
-                style="margin: 7px"
-                data-toggle="modal"
-                data-target="#exampleModalLong"
-                @click="adaugareProdus()"
-                >Modifică produs</el-button
-              >
-            </div>
+        </div>
+        <!-- data -->
+        <div class="col-lg-3">
+          <h3 style="margin-top: 20px">Informații furnizor</h3>
+          <hr />
+          <div class="input-group mb-3" style="margin-top: 35px">
+            <span
+              class="input-group-text"
+              id="basic-addon3"
+              style="margin-left: 7%"
+              >Nume</span
+            >
+            <input
+              type="text"
+              style="margin-left: 0 !important"
+              class="form-control"
+              placeholder="Nu sunt informatii"
+              aria-label="Cantitate disponibila"
+              readonly
+              aria-describedby="basic-addon3"
+              v-model="produs.cantitateDisponibila"
+            />
           </div>
+          <div class="input-group mb-3" style="margin-top: 35px">
+            <span
+              class="input-group-text"
+              id="basic-addon3"
+              style="margin-left: 7%"
+              >Scor Furnizor</span
+            >
+            <input
+              type="text"
+              style="margin-left: 0 !important"
+              class="form-control"
+              placeholder="Nu sunt informatii"
+              aria-label="Cantitate disponibila"
+              readonly
+              aria-describedby="basic-addon3"
+              v-model="produs.cantitateDisponibila"
+            />
+          </div>
+          <div class="input-group mb-3" style="margin-top: 35px">
+            <span
+              class="input-group-text"
+              id="basic-addon3"
+              style="margin-left: 7%"
+              >Adresa</span
+            >
+            <input
+              type="text"
+              style="margin-left: 0 !important"
+              class="form-control"
+              placeholder="Nu sunt informatii"
+              aria-label="Cantitate disponibila"
+              readonly
+              aria-describedby="basic-addon3"
+              v-model="produs.cantitateDisponibila"
+            />
+          </div>
+          <div class="input-group mb-3" style="margin-top: 35px">
+            <span
+              class="input-group-text"
+              id="basic-addon3"
+              style="margin-left: 7%"
+              >Localitate</span
+            >
+            <input
+              type="text"
+              style="margin-left: 0 !important"
+              class="form-control"
+              placeholder="Nu sunt informatii"
+              aria-label="Cantitate disponibila"
+              readonly
+              aria-describedby="basic-addon3"
+              v-model="produs.cantitateDisponibila"
+            />
+          </div>
+          <div class="input-group mb-3" style="margin-top: 35px">
+            <span
+              class="input-group-text"
+              id="basic-addon3"
+              style="margin-left: 7%"
+              >Telefon</span
+            >
+            <input
+              type="text"
+              style="margin-left: 0 !important"
+              class="form-control"
+              placeholder="Nu sunt informatii"
+              aria-label="Cantitate disponibila"
+              readonly
+              aria-describedby="basic-addon3"
+              v-model="produs.cantitateDisponibila"
+            />
+          </div>
+
+          <el-button
+            type="primary"
+            data-toggle="modal"
+            data-target="#exampleModalLong"
+            style="margin: 7px"
+            @click="$router.push({ path: '/produse' })"
+            >Înapoi</el-button
+          >
         </div>
       </div>
     </div>
@@ -122,23 +325,27 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from "vuex";
 export default {
-  props: ["produs"],
   data() {
     return {
+      produs: {},
+      furnizor: {},
+      furnizorId: "",
+      cantitateRezervata: 1,
       img: [],
-      selectedCategory: "",
-      dateProdusNou: {
-        numeProdus: "",
-        descriereProdus: "",
-        pretProdus: "",
-        categorieProdus: "",
-        dataExpirarii: "",
-        cantitateDisponibila: 0,
-      },
     };
   },
+  computed: {
+    ...mapGetters(["rolUtilizator"]),
+  },
   methods: {
+    ...mapActions([
+      "getOneProdus",
+      "getProdusFirma",
+      "getProdusFirmaId",
+      "addRezervare",
+    ]),
     renunta() {
       this.$emit("added");
     },
@@ -146,21 +353,56 @@ export default {
       // return { backgroundColor: "yellow", height: "200px" };
       return {
         backgroundImage: `url("/assets/products/${filename}")`,
-        height: "200px",
+        height: "300px",
+        width: "80%",
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
         backgroundPosition: "center center",
         borderRadius: "20px",
         border: "2px solid #27ae60 ",
         boxShadow: " inset 0px 0px 10px 1px rgba(0,0,0,0.2)",
-        margin: "35px",
+        margin: "20px",
+        alignSelf: "center",
       };
     },
+    rezervareProdus() {
+      let rezervareNoua = {
+        produsId: this.produs._id,
+        furnizorId: this.furnizorId,
+        cantitateRezervata: this.cantitateRezervata,
+        deadline: this.produs.dataExpirarii,
+      };
+      this.addRezervare(rezervareNoua);
+    },
+  },
+  async created() {
+    console.log(this.$route.params.id);
+    this.produs = await this.getOneProdus(this.$route.params.id);
+    this.furnizor = await this.getProdusFirma(this.$route.params.id);
+    this.furnizorId = await this.getProdusFirmaId(this.$route.params.id);
+    console.log(this.furnizorId);
+    console.log(this.produs);
+    console.log(this.furnizor);
   },
 };
 </script>
 
 <style scoped>
+.col-lg-4,
+.col-lg-5 {
+  padding-right: 0 !important;
+  padding-left: 0 !important;
+}
+.el-button {
+  background-color: #27ae60;
+  border-color: #27ae60;
+  width: 50%;
+  align-self: center;
+}
+#photoDiv {
+  display: flex !important;
+  justify-content: center !important;
+}
 .color input {
   background-color: #f1f1f1;
 }
@@ -180,10 +422,16 @@ ul {
   flex-wrap: wrap;
 }
 h2 {
-  font-size: 28px;
+  font-size: 36px;
   margin-left: 5%;
   margin-right: 5%;
+  padding-top: 5px !important;
   padding: 22px;
+}
+h3 {
+  font-size: 22px;
+  margin-left: 5%;
+  margin-right: 5%;
 }
 h4 {
   display: flex;

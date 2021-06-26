@@ -231,7 +231,7 @@ export default {
     },
     adaugareProdus() {
       console.log(this.img);
-      this.addProdus();
+
       let fd = new FormData();
       fd.append("numeProdus", this.dateProdusNou.numeProdus);
       fd.append("descriereProdus", this.dateProdusNou.descriereProdus);
@@ -243,7 +243,7 @@ export default {
         this.dateProdusNou.cantitateDisponibila
       );
       fd.append("image", this.img.raw);
-
+      this.addProdus();
       this.addProduct(fd)
         .then((res) => {
           if (res.data.succes) {
