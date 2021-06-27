@@ -17,7 +17,11 @@
                   <div class="mt-3 buttons">
                     <button class="btn">Schimbă poza</button>
 
-                    <button class="btn">Rezervări</button>
+                    <button class="btn">
+                      <router-link to="/rezervariuser" style="color: white"
+                        >Rezervari
+                      </router-link>
+                    </button>
                   </div>
                 </div>
               </div>
@@ -44,16 +48,15 @@
                   <div class="col-sm-3">
                     <h6 class="mb-0">Telefon</h6>
                   </div>
-                  <div class="col-sm-9 text-secondary">to be added</div>
+                  <div class="col-sm-9 text-secondary">
+                    {{ user.utilizator.telefon }}
+                  </div>
                 </div>
                 <hr />
 
                 <div class="row">
                   <div class="col-sm-12">
-                    <a
-                      class="btn btn-info"
-                      target="__blank"
-                      href="https://www.bootdey.com/snippets/view/profile-edit-data-and-skills"
+                    <a class="btn btn-info" target="__blank" href="#"
                       >Modifică</a
                     >
                   </div>

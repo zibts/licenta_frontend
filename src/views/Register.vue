@@ -10,20 +10,22 @@
             :rules="rules"
             ref="dateInregistrare"
           >
-            <el-form-item prop="numeUtilizator">
-              Introduceți numele utilizatorului
-              <el-input
-                placeholder="Numele utilizatorului"
-                v-model="dateInregistrare.numeUtilizator"
-              ></el-input>
-            </el-form-item>
-            <el-form-item prop="email">
-              E-mail
-              <el-input
-                placeholder="Email-ul"
-                v-model="dateInregistrare.email"
-              ></el-input>
-            </el-form-item>
+            <el-form :inline="true">
+              <el-form-item prop="numeUtilizator">
+                Introduceți numele utilizatorului
+                <el-input
+                  placeholder="Numele utilizatorului"
+                  v-model="dateInregistrare.numeUtilizator"
+                ></el-input>
+              </el-form-item>
+              <el-form-item prop="email">
+                E-mail
+                <el-input
+                  placeholder="Email-ul"
+                  v-model="dateInregistrare.email"
+                ></el-input>
+              </el-form-item>
+            </el-form>
             <el-form :inline="true">
               <el-form-item prop="nume">
                 Nume
@@ -37,6 +39,13 @@
                 <el-input
                   placeholder="Prenumele dvs."
                   v-model="dateInregistrare.prenume"
+                ></el-input>
+              </el-form-item>
+              <el-form-item prop="telefon">
+                Nr. de telefon
+                <el-input
+                  placeholder="Nr. de telefon al dvs."
+                  v-model="dateInregistrare.telefon"
                 ></el-input>
               </el-form-item>
             </el-form>
@@ -58,6 +67,33 @@
                 ></el-input>
               </el-form-item>
             </el-form>
+            <el-form-item>
+              <div class="upload">
+                <h4>Avatar firmă</h4>
+                <el-upload
+                  class="upload-demo"
+                  drag
+                  action="https://jsonplaceholder.typicode.com/posts/"
+                  :on-change="handleUploadChange"
+                  :file-list="img"
+                  :multiple="false"
+                  list-type="picture"
+                  accept=".jpg, .png, .jpeg"
+                  style="width: 100%"
+                >
+                  <div class="uploadBody">
+                    <i class="el-icon-upload"></i>
+                    <div class="el-upload__text">
+                      Trageți aici un fișier sau
+                      <em>dați click pentru a încărca poză</em>
+                    </div>
+                    <div class="el-upload__tip" slot="tip">
+                      fișiere de tip jpg/png
+                    </div>
+                  </div>
+                </el-upload>
+              </div></el-form-item
+            >
             <div class="login-btn">
               <el-button>
                 <router-link to="/login" class="card-link"
@@ -107,7 +143,9 @@ export default {
         parolaConfirm: "",
         nume: "",
         prenume: "",
+        telefon: "",
       },
+      img: [],
       rules: {
         numeUtilizator: [
           {
@@ -126,18 +164,24 @@ export default {
   },
   methods: {
     ...mapActions(["register"]),
+    handleUploadChange(file) {
+      this.img = file;
+    },
     inregistrareUtilizator() {
       let utilizator = {
-        numeUtilizator: this.dateInregistrare.numeUtilizator,
-        email: this.dateInregistrare.email,
-        parola: this.dateInregistrare.parola,
-        parola_confirmare: this.dateInregistrare.parolaConfirm,
-        utilizator: {
-          nume: this.dateInregistrare.nume,
-          prenume: this.dateInregistrare.prenume,
-        },
+        nume: this.dateInregistrare.nume,
+        prenume: this.dateInregistrare.prenume,
+        telefon: this.dateInregistrare.telefon,
       };
-      this.register(utilizator)
+      let fr = new FormData();
+      fr.append("numeUtilizator", this.dateInregistrare.numeUtilizator);
+      fr.append("email", this.dateInregistrare.email);
+      fr.append("parola", this.dateInregistrare.parola);
+      fr.append("parola_confirmare", this.dateInregistrare.parolaConfirm);
+      fr.append("utilizator", JSON.stringify(utilizator));
+      fr.append("image", this.img.raw);
+
+      this.register(fr)
         .then((res) => {
           if (res.data.succes) {
             this.$router.push("login");

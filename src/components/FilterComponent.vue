@@ -80,7 +80,7 @@
       <hr />
       <!-- Section: Condition -->
       <section class="mb-4">
-        <h6 class="font-weight-bold mb-3">locatie</h6>
+        <h6 class="font-weight-bold mb-3">Localitate</h6>
         <ul>
           <li
             v-on:click="setlocatie('Iași')"

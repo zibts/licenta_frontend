@@ -5,6 +5,13 @@
   >
     <div
       class="row"
+      v-if="rezervari.length == 0"
+      style="color: black; font-weight: bold; font-size: 48px"
+    >
+      Nu aveți rezervări
+    </div>
+    <div
+      class="row"
       style="display: flex; justify-content: center; padding: 30px"
       v-for="(rezervare, index) in rezervari"
       :key="index"
@@ -131,6 +138,9 @@ export default {
 }
 .inProgress {
   background: #f2c94c;
+}
+.done {
+  background: #27ae60;
 }
 .el-button {
   background-color: #27ae60;

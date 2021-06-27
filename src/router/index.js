@@ -66,7 +66,7 @@ const routes = [
     name: "Rezervari Firma",
     component: () => import("../views/RezervariFirma.vue"),
     meta: {
-      requireFira: true,
+      requireFirma: true,
     },
   },
   {

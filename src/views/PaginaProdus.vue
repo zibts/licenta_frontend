@@ -115,7 +115,7 @@
                       font-size: 16px;
                     "
                   >
-                    {{ furnizor.localitate }}
+                    {{ furnizor.locatie }}
                   </div>
                 </div>
               </div>
@@ -179,7 +179,7 @@
                   class="input-group-text"
                   id="basic-addon3"
                   style="margin-left: 7%"
-                  >Cantitate</span
+                  >Cantitate disponibilă</span
                 >
                 <input
                   type="text"
@@ -207,6 +207,8 @@
                     border: 3px solid #dfdfdf;
                     border-radius: 5px;
                     font-size: 16px;
+                    color: red;
+                    font-weight: bold;
                   "
                 >
                   {{ moment(produs.dataExpirarii).format("LLL") }}
@@ -231,30 +233,13 @@
               style="margin-left: 0 !important"
               class="form-control"
               placeholder="Nu sunt informatii"
-              aria-label="Cantitate disponibila"
+              aria-label="Furnizor nume"
               readonly
               aria-describedby="basic-addon3"
-              v-model="produs.cantitateDisponibila"
+              v-model="furnizor.nume"
             />
           </div>
-          <div class="input-group mb-3" style="margin-top: 35px">
-            <span
-              class="input-group-text"
-              id="basic-addon3"
-              style="margin-left: 7%"
-              >Scor Furnizor</span
-            >
-            <input
-              type="text"
-              style="margin-left: 0 !important"
-              class="form-control"
-              placeholder="Nu sunt informatii"
-              aria-label="Cantitate disponibila"
-              readonly
-              aria-describedby="basic-addon3"
-              v-model="produs.cantitateDisponibila"
-            />
-          </div>
+
           <div class="input-group mb-3" style="margin-top: 35px">
             <span
               class="input-group-text"
@@ -267,10 +252,10 @@
               style="margin-left: 0 !important"
               class="form-control"
               placeholder="Nu sunt informatii"
-              aria-label="Cantitate disponibila"
+              aria-label="Furnizor adresa"
               readonly
               aria-describedby="basic-addon3"
-              v-model="produs.cantitateDisponibila"
+              v-model="furnizor.adresa"
             />
           </div>
           <div class="input-group mb-3" style="margin-top: 35px">
@@ -285,10 +270,10 @@
               style="margin-left: 0 !important"
               class="form-control"
               placeholder="Nu sunt informatii"
-              aria-label="Cantitate disponibila"
+              aria-label="Furnizor localitate"
               readonly
               aria-describedby="basic-addon3"
-              v-model="produs.cantitateDisponibila"
+              v-model="furnizor.locatie"
             />
           </div>
           <div class="input-group mb-3" style="margin-top: 35px">
@@ -303,10 +288,10 @@
               style="margin-left: 0 !important"
               class="form-control"
               placeholder="Nu sunt informatii"
-              aria-label="Cantitate disponibila"
+              aria-label="Furnizor telefon"
               readonly
               aria-describedby="basic-addon3"
-              v-model="produs.cantitateDisponibila"
+              v-model="furnizor.telefon"
             />
           </div>
 

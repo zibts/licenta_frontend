@@ -49,7 +49,7 @@
               <el-card
                 :body-style="{
                   padding: '20px',
-                  height: '270px',
+                  height: '320px',
                 }"
               >
                 <div :style="getPhotos(produs.img)"></div>
@@ -57,6 +57,17 @@
                   <h4 style="font-size: 16px; font-weight: bold">
                     {{ produs.numeProdus }}
                   </h4>
+                  <h6
+                    style="
+                      background: #27ae60;
+                      border-radius: 20px;
+                      padding: 5px;
+                      color: white;
+                      font-weight: bold;
+                    "
+                  >
+                    {{ produs.locatie }}
+                  </h6>
                   <div
                     class="details"
                     style="display: flex; flex-direction: column"
@@ -170,19 +181,19 @@ export default {
         }
       } else {
         if (this.categorie != "" && this.locatie != "") {
-          this.filteredProduse = this.list.filter(
+          this.filteredProduse = this.unFilteredProduse.filter(
             (produs) =>
               produs.categorieProdus == this.categorie &&
               produs.locatie == this.locatie
           );
           this.searchValueShow = true;
         } else if (this.categorie != "") {
-          this.filteredProduse = this.list.filter(
+          this.filteredProduse = this.unFilteredProduse.filter(
             (produs) => produs.categorieProdus == this.categorie
           );
           this.searchValueShow = true;
         } else if (this.locatie != "") {
-          this.filteredProduse = this.list.filter(
+          this.filteredProduse = this.unFilteredProduse.filter(
             (produs) => produs.locatie == this.locatie
           );
           this.searchValueShow = true;
@@ -224,7 +235,8 @@ export default {
     },
   },
   async created() {
-    // this.unFilteredProduse = await this.getAllProduse();
+    this.unFilteredProduse = await this.getAllProduse();
+    console.log(this.unFilteredProduse);
   },
 };
 </script>

@@ -93,7 +93,7 @@ const actions = {
   },
   //Obtinerea tuturor produselor
   async getAllProduse() {
-    let res = await axios.get("http://localhost:8081/api/produse");
+    let res = await axios.get("http://localhost:8081/api/produse/all");
     return res.data;
   },
   //Obtinerea unui produs
@@ -121,6 +121,8 @@ const actions = {
     return res;
   },
 
+  
+
   //Obtinerea rezervarilor firma
   async getAllRezervariFirma() {
     let res = await axios.get("http://localhost:8081/api/firma/rezervari");
@@ -130,6 +132,21 @@ const actions = {
     let res = await axios.get("http://localhost:8081/api/firma/rezervari/" + code);
     return res.data;
   },
+  async confirmOneRezervariFirma({commit}, code) {
+    let res = await axios.put("http://localhost:8081/api/firma/rezervari/" + code,{
+      realizat:true
+    }
+    );
+    return res.data;
+  },
+  async anulareOneRezervariFirma({commit}, code) {
+    let res = await axios.put("http://localhost:8081/api/firma/rezervari/" + code,{
+      realizat:false
+    }
+    );
+    return res.data;
+  },
+
 
   async getProdusFirma({commit},produs) {
     let res = await axios.get("http://localhost:8081/api/produse/"+ produs + "/firma");

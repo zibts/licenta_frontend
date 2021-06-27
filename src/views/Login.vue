@@ -97,7 +97,7 @@ export default {
       this.login(utilizator)
         .then((res) => {
           if (res.data.success) {
-            this.$router.push("home");
+            this.$router.push("profile");
           }
         })
         .catch((err) => {

@@ -6,7 +6,7 @@
       data-toggle="modal"
       data-target="#cautaRezervarea"
     >
-      Launch demo modal
+      Confirmați rezervarea
     </button>
 
     <!-- Modal -->
@@ -49,6 +49,15 @@
                 v-model="code"
               />
             </div>
+            <div
+              style="font-weight: bold"
+              class="modal-footer"
+              v-if="notFound == true"
+            >
+              <span>Rezervarea cu codul</span>
+              <span style="color: red">{{ this.lastCode }}</span>
+              <span>nu a fost găsită</span>
+            </div>
           </div>
           <div class="modal-footer">
             <button
@@ -76,16 +85,16 @@
       v-if="confirmProduct && rezervareConfirmare != {}"
       class="modal fade"
       style="margin-top: 200px"
-      id="confirmaRezervarea"
+      id="cautaRezervarea"
       tabindex="-1"
       role="dialog"
-      aria-labelledby="configrmaRezervareaLabel"
+      aria-labelledby="cautaRezervareaLabel"
       aria-hidden="true"
     >
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="confirmaRezervareaLabel">
+            <h5 class="modal-title" id="cautaRezervareaLabel">
               Detaliile rezervării și confirmarea
             </h5>
 
@@ -166,10 +175,64 @@
             </button>
             <button
               type="button"
-              @click="getRezervare(this.code)"
+              @click="confirmRezervare(code)"
               class="btn btn-primary"
+              data-dismiss="modal"
             >
-              Pasul următor
+              Confirmă rezervarea
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="modal fade"
+      style="margin-top: 200px"
+      id="confirmaAnulare"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="confirmaAnulareLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="confirmaAnulareLabel">
+              Sunteți sigur că doriți să anulați rezervarea respectivă?
+            </h5>
+
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+              @click="renunta"
+            >
+              Renunță
+            </button>
+            <button
+              type="button"
+              @click="anulareRezervareDB(code)"
+              class="btn btn-primary"
+              data-dismiss="modal"
+              style="
+                background-color: #eb5757;
+                border: 1px solid #eb5757;
+                font-weight: bold;
+              "
+            >
+              Confirm anularea
             </button>
           </div>
         </div>
@@ -243,7 +306,21 @@
           >
             Status:
             <span v-if="typeof rezervare.realizat === 'undefined'"
-              >În așteptare</span
+              >În așteptare
+              <button
+                @click="anulareRezervare(rezervare.code)"
+                type="button"
+                class="btn btn-primary"
+                data-toggle="modal"
+                data-target="#confirmaAnulare"
+                style="
+                  background-color: #eb5757;
+                  border: 1px solid #eb5757;
+                  font-weight: bold;
+                "
+              >
+                Anulare
+              </button></span
             >
             <span
               v-if="
@@ -276,16 +353,43 @@ export default {
       produsInterMed: {},
       rezervareConfirmare: {},
       confirmProduct: false,
+      notFound: false,
       code: "",
+      lastCode: "",
+      anulareCode: "",
     };
   },
   methods: {
-    ...mapActions(["getAllRezervariFirma", "getOneRezervariFirma"]),
+    ...mapActions([
+      "getAllRezervariFirma",
+      "getOneRezervariFirma",
+      "confirmOneRezervariFirma",
+      "anulareOneRezervariFirma",
+    ]),
     async getRezervare(code) {
-      this.confirmProduct = true;
       this.rezervareConfirmare = await this.getOneRezervariFirma(code);
-
-      console.log(this.rezervareConfirmare);
+      if (this.rezervareConfirmare == null || code == "") {
+        this.lastCode = code;
+        this.notFound = true;
+        console.log("not found");
+        console.log(this.notFound);
+      } else {
+        this.notFound = false;
+        this.confirmProduct = true;
+        console.log(this.rezervareConfirmare);
+      }
+    },
+    anulareRezervare(code) {
+      this.anulareCode = code;
+    },
+    async anulareRezervareDB() {
+      await this.anulareOneRezervariFirma(this.anulareCode);
+      this.refreshList();
+    },
+    async confirmRezervare(code) {
+      await this.confirmOneRezervariFirma(code);
+      console.log("succes");
+      this.refreshList();
     },
     renunta() {
       this.rezervareConfirmare = {};
@@ -307,6 +411,8 @@ export default {
     },
     async refreshList() {
       this.rezervari = await this.getAllRezervariFirma();
+      this.rezervareConfirmare = {};
+      this.confirmProduct = false;
     },
   },
   async created() {
@@ -318,6 +424,27 @@ export default {
 </script>
 
 <style scoped>
+.btn {
+  background-color: #27ae60;
+  border-color: #27ae60;
+}
+.btn:focus,
+.btn {
+  background-color: #1b8448;
+  border-color: #1b8448;
+}
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active,
+.btn-primary:active:focus:not(:disabled):not(.disabled),
+.btn:focus,
+.btn:active,
+.btn:hover {
+  background-color: #27ae60;
+  border-color: #27ae60;
+  box-shadow: none !important;
+  outline: 0;
+}
 * {
   font-family: "Raleway", sans-serif;
 }
@@ -326,6 +453,9 @@ export default {
 }
 .inProgress {
   background: #f2c94c;
+}
+.done {
+  background: #27ae60;
 }
 .el-button {
   background-color: #27ae60;
