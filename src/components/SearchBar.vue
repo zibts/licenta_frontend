@@ -22,7 +22,7 @@ export default {
   methods: {},
 };
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 .searchbar {
   input {
     border: none;

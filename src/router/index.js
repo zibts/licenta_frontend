@@ -12,11 +12,6 @@ const routes = [
     component: Home,
   },
   {
-    path: "/about",
-    name: "About",
-    component: () => import("../views/About.vue"),
-  },
-  {
     path: "/produse",
     name: "Produse",
     component: () => import("../views/Produse.vue"),
@@ -56,6 +51,22 @@ const routes = [
     component: () => import("../views/Profile.vue"),
     meta: {
       requireAuth: true,
+    },
+  },
+  {
+    path: "/rezervariuser",
+    name: "Rezervari User",
+    component: () => import("../views/RezervariUser.vue"),
+    meta: {
+      requireAuth: true,
+    },
+  },
+  {
+    path: "/rezervarifirma",
+    name: "Rezervari Firma",
+    component: () => import("../views/RezervariFirma.vue"),
+    meta: {
+      requireFira: true,
     },
   },
   {

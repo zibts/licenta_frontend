@@ -80,46 +80,42 @@
       <hr />
       <!-- Section: Condition -->
       <section class="mb-4">
-        <h6 class="font-weight-bold mb-3">Localitate</h6>
+        <h6 class="font-weight-bold mb-3">locatie</h6>
         <ul>
           <li
-            v-on:click="setLocalitate('iasi')"
-            :class="[selectedLocalitate == 'iasi' ? 'active' : 'notActive']"
+            v-on:click="setlocatie('Iași')"
+            :class="[selectedlocatie == 'Iași' ? 'active' : 'notActive']"
           >
             Iași
           </li>
           <li
-            v-on:click="setLocalitate('chisinau')"
-            :class="[selectedLocalitate == 'chisinau' ? 'active' : 'notActive']"
+            v-on:click="setlocatie('Chișinău')"
+            :class="[selectedlocatie == 'Chișinău' ? 'active' : 'notActive']"
           >
             Chișinău
           </li>
           <li
-            v-on:click="setLocalitate('bucuresti')"
-            :class="[
-              selectedLocalitate == 'bucuresti' ? 'active' : 'notActive',
-            ]"
+            v-on:click="setlocatie('București')"
+            :class="[selectedlocatie == 'București' ? 'active' : 'notActive']"
           >
             București
           </li>
           <li
-            v-on:click="setLocalitate('cluj')"
-            :class="[selectedLocalitate == 'cluj' ? 'active' : 'notActive']"
+            v-on:click="setlocatie('Cluj')"
+            :class="[selectedlocatie == 'Cluj' ? 'active' : 'notActive']"
           >
             Cluj
           </li>
           <li
-            v-on:click="setLocalitate('timisoara')"
-            :class="[
-              selectedLocalitate == 'timisoara' ? 'active' : 'notActive',
-            ]"
+            v-on:click="setlocatie('Timișoara')"
+            :class="[selectedlocatie == 'Timișoara' ? 'active' : 'notActive']"
           >
             Timișoara
           </li>
           <li
-            v-on:click="setLocalitate('miercurea')"
+            v-on:click="setlocatie('Miercurea-Ciuc')"
             :class="[
-              selectedLocalitate == 'miercurea' ? 'active' : 'notActive',
+              selectedlocatie == 'Miercurea-Ciuc' ? 'active' : 'notActive',
             ]"
           >
             Miercurea-Ciuc
@@ -131,7 +127,7 @@
     <button
       class="btn btn-primary"
       type="button"
-      v-on:click="$emit('anulare'), setLocalitate(''), setCategory('')"
+      v-on:click="$emit('anulare'), setlocatie(''), setCategory('')"
       style="width: 100%"
     >
       Anulare criterii
@@ -145,7 +141,7 @@ export default {
   data() {
     return {
       selectedCategory: "",
-      selectedLocalitate: "",
+      selectedlocatie: "",
     };
   },
   methods: {
@@ -153,9 +149,9 @@ export default {
       this.selectedCategory = item;
       this.$emit("filterCategorie", item);
     },
-    setLocalitate: function (localitate) {
-      this.selectedLocalitate = localitate;
-      this.$emit("filterLocalitate", localitate);
+    setlocatie: function (locatie) {
+      this.selectedlocatie = locatie;
+      this.$emit("filterlocatie", locatie);
     },
   },
 };

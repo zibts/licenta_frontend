@@ -19,7 +19,7 @@
         <div class="collapse" id="collapseExample">
           <FilterComponent
             v-on:filterCategorie="setCategorie"
-            v-on:filterLocalitate="setLocalitate"
+            v-on:filterlocatie="setlocatie"
             v-on:anulare="anulare"
           />
         </div>
@@ -30,7 +30,7 @@
       <div class="col col-lg-3" id="bigFilter" style="padding: 20px">
         <FilterComponent
           v-on:filterCategorie="setCategorie"
-          v-on:filterLocalitate="setLocalitate"
+          v-on:filterlocatie="setlocatie"
           v-on:anulare="anulare"
         />
       </div>
@@ -107,7 +107,7 @@ export default {
       currentDate: new Date(),
       list: [],
       categorie: "",
-      localitate: "",
+      locatie: "",
       localProdus: {},
       toggledDropDown: false,
       unFilteredProduse: [],
@@ -119,8 +119,8 @@ export default {
   },
   methods: {
     ...mapActions(["getAllProduse"]),
-    setLocalitate(localitate) {
-      this.localitate = localitate;
+    setlocatie(locatie) {
+      this.locatie = locatie;
       this.watchSearch();
     },
     setCategorie(categorie) {
@@ -129,7 +129,7 @@ export default {
     },
     anulare() {
       this.categorie = "";
-      this.localitate = "";
+      this.locatie = "";
       this.watchSearch();
     },
     async watchSearch(search) {
@@ -144,11 +144,11 @@ export default {
             },
           }
         );
-        if (this.categorie != "" && this.localitate != "") {
+        if (this.categorie != "" && this.locatie != "") {
           this.filteredProduse = searchProdus.data.filter(
             (produs) =>
               produs.categorieProdus == this.categorie &&
-              produs.localitate == this.localitate &&
+              produs.locatie == this.locatie &&
               produs.numeProdus
                 .toLowerCase()
                 .includes(this.searchedValue.toLowerCase())
@@ -161,20 +161,19 @@ export default {
                 .toLowerCase()
                 .includes(this.searchedValue.toLowerCase())
           );
-        } else if (this.localitate != "") {
+        } else if (this.locatie != "") {
           this.filteredProduse = searchProdus.data.filter(
-            (produs) => produs.localitate == this.localitate
+            (produs) => produs.locatie == this.locatie
           );
         } else {
           this.filteredProduse = searchProdus.data;
-          console.log("bruh");
         }
       } else {
-        if (this.categorie != "" && this.localitate != "") {
+        if (this.categorie != "" && this.locatie != "") {
           this.filteredProduse = this.list.filter(
             (produs) =>
               produs.categorieProdus == this.categorie &&
-              produs.localitate == this.localitate
+              produs.locatie == this.locatie
           );
           this.searchValueShow = true;
         } else if (this.categorie != "") {
@@ -182,9 +181,9 @@ export default {
             (produs) => produs.categorieProdus == this.categorie
           );
           this.searchValueShow = true;
-        } else if (this.localitate != "") {
+        } else if (this.locatie != "") {
           this.filteredProduse = this.list.filter(
-            (produs) => produs.localitate == this.localitate
+            (produs) => produs.locatie == this.locatie
           );
           this.searchValueShow = true;
         } else {

@@ -6,22 +6,38 @@
           <div class="col-md-4 mb-3">
             <div class="card">
               <div class="card-body">
-                <div class="d-flex flex-column">
-                  <img
-                    src="../assets/company_logo.png"
-                    alt="Admin"
-                    class="rounded-circle align-self-center"
-                    width="150"
-                  />
+                <div
+                  style="
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                  "
+                >
+                  <div id="#photoDiv" :style="getPhotos(user.img)"></div>
                   <h4>{{ user.firma.nume }}</h4>
                   <div class="mt-3 buttons">
                     <button class="btn">Schimbă poza</button>
-                    <button class="btn">Produse</button>
-                    <button class="btn">Rezervări</button>
+                    <button class="btn">
+                      <router-link style="color: white" to="/produsemanager"
+                        >Produse</router-link
+                      >
+                    </button>
+                    <button class="btn">
+                      <router-link style="color: white" to="/rezervarifirma"
+                        >Rezervari</router-link
+                      >
+                    </button>
                   </div>
                   <ul class="list-group list-group-flush">
                     <li
-                      class="list-group-item d-flex justify-content-between align-items-center flex-wrap"
+                      class="
+                        list-group-item
+                        d-flex
+                        justify-content-between
+                        align-items-center
+                        flex-wrap
+                      "
                     >
                       <h6 class="mb-0">
                         <svg
@@ -43,11 +59,19 @@
                           ></path></svg
                         >Website
                       </h6>
-                      <span class="text-secondary">https://kaufland.com</span>
+                      <span style="margin-left: 30px" class="text-secondary">{{
+                        user.firma.website
+                      }}</span>
                     </li>
 
                     <li
-                      class="list-group-item d-flex justify-content-between align-items-center flex-wrap"
+                      class="
+                        list-group-item
+                        d-flex
+                        justify-content-between
+                        align-items-center
+                        flex-wrap
+                      "
                     >
                       <h6 class="mb-0">
                         <svg
@@ -60,7 +84,12 @@
                           stroke-width="2"
                           stroke-linecap="round"
                           stroke-linejoin="round"
-                          class="feather feather-instagram mr-2 icon-inline text-danger"
+                          class="
+                            feather feather-instagram
+                            mr-2
+                            icon-inline
+                            text-danger
+                          "
                         >
                           <rect
                             x="2"
@@ -81,10 +110,18 @@
                           ></line></svg
                         >Instagram
                       </h6>
-                      <span class="text-secondary">kaufland</span>
+                      <span class="text-secondary">{{
+                        user.firma.instagram
+                      }}</span>
                     </li>
                     <li
-                      class="list-group-item d-flex justify-content-between align-items-center flex-wrap"
+                      class="
+                        list-group-item
+                        d-flex
+                        justify-content-between
+                        align-items-center
+                        flex-wrap
+                      "
                     >
                       <h6 class="mb-0">
                         <svg
@@ -97,14 +134,21 @@
                           stroke-width="2"
                           stroke-linecap="round"
                           stroke-linejoin="round"
-                          class="feather feather-facebook mr-2 icon-inline text-primary"
+                          class="
+                            feather feather-facebook
+                            mr-2
+                            icon-inline
+                            text-primary
+                          "
                         >
                           <path
                             d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"
                           ></path></svg
                         >Facebook
                       </h6>
-                      <span class="text-secondary">kaufland</span>
+                      <span class="text-secondary">{{
+                        user.firma.facebook
+                      }}</span>
                     </li>
                   </ul>
                 </div>
@@ -113,7 +157,7 @@
           </div>
           <div class="col-md-8">
             <div class="card mb-3">
-              <h3>Informații utilizator</h3>
+              <h3>Informații furnizor</h3>
               <div class="dropdown-divider"></div>
               <div class="card-body">
                 <div class="row">
@@ -145,22 +189,32 @@
                   <div class="col-sm-3">
                     <h6 class="mb-0">Telefon</h6>
                   </div>
-                  <div class="col-sm-9 text-secondary">to be added</div>
+                  <div class="col-sm-9 text-secondary">
+                    {{ user.firma.telefon }}
+                  </div>
                 </div>
                 <hr />
                 <div class="row">
                   <div class="col-sm-3">
                     <h6 class="mb-0">Adresa</h6>
                   </div>
-                  <div class="col-sm-9 text-secondary">to be added</div>
+                  <div class="col-sm-9 text-secondary">
+                    {{ user.firma.adresa }}
+                  </div>
+                </div>
+                <hr />
+                <div class="row">
+                  <div class="col-sm-3">
+                    <h6 class="mb-0">Locatie</h6>
+                  </div>
+                  <div class="col-sm-9 text-secondary">
+                    {{ user.firma.locatie }}
+                  </div>
                 </div>
                 <hr />
                 <div class="row">
                   <div class="col-sm-12">
-                    <a
-                      class="btn btn-info"
-                      target="__blank"
-                      href="https://www.bootdey.com/snippets/view/profile-edit-data-and-skills"
+                    <a class="btn btn-info" target="__blank" href=""
                       >Modifică</a
                     >
                   </div>
@@ -177,10 +231,30 @@
 <script>
 export default {
   props: ["user"],
+  methods: {
+    getPhotos(filename) {
+      // return { backgroundColor: "yellow", height: "200px" };
+      return {
+        backgroundImage: `url("/assets/products/${filename}")`,
+        height: "200px",
+        width: "200px",
+        backgroundSize: "cover",
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "center center",
+        borderRadius: "100px",
+        border: "1px solid #27ae60 ",
+        boxShadow: " inset 0px 0px 10px 1px rgba(0,0,0,0.2)",
+      };
+    },
+  },
 };
 </script>
 
 <style scoped>
+* {
+  font-family: "Raleway", sans-serif;
+  font-weight: bold;
+}
 h4 {
   font-family: "Raleway", sans-serif;
   font-size: 36px;
@@ -204,7 +278,7 @@ h4 {
 }
 h3 {
   color: #1b8448;
-  padding: 20px;
+  padding: 10px;
   font-size: 36px;
 }
 </style>

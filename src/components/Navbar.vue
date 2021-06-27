@@ -36,8 +36,8 @@
           :class="[activeItem == 'produse' ? 'active' : 'notActive']"
         >
           <router-link class="nav-link barbtn" to="/produse"
-            >Vizualizează produse</router-link
-          >
+            >Vizualizează produse
+          </router-link>
         </li>
 
         <li v-if="!esteLogat" class="nav-item dropdown">
@@ -77,11 +77,42 @@
         </li>
         <li
           class="nav-item"
+          v-on:click="setActive('prod-mele')"
+          :class="[activeItem == 'prod-mele' ? 'active' : 'notActive']"
+          v-if="esteFirma && rolUtilizator == 'firma'"
+        >
+          <router-link class="nav-link barbtn" to="/produsemanager"
+            >Produsele mele</router-link
+          >
+        </li>
+        <li
+          class="nav-item"
           v-on:click="setActive('login')"
           :class="[activeItem == 'login' ? 'active' : 'notActive']"
           v-if="!esteLogat"
         >
           <router-link class="nav-link barbtn" to="/login">Login</router-link>
+        </li>
+
+        <li
+          class="nav-item"
+          v-on:click="setActive('rez-mele')"
+          :class="[activeItem == 'rez-mele' ? 'active' : 'notActive']"
+          v-if="!esteFirma && rolUtilizator == 'user'"
+        >
+          <router-link class="nav-link barbtn" to="/rezervariuser"
+            >Rezervările mele</router-link
+          >
+        </li>
+        <li
+          class="nav-item"
+          v-on:click="setActive('rez-furn')"
+          :class="[activeItem == 'rez-furn' ? 'active' : 'notActive']"
+          v-if="esteFirma && rolUtilizator == 'firma'"
+        >
+          <router-link class="nav-link barbtn" to="/rezervarifirma"
+            >Rezervările mele</router-link
+          >
         </li>
 
         <li v-if="esteLogat" class="nav-item dropdown">
@@ -97,22 +128,6 @@
             Contul meu
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li
-              class="dropdown-item"
-              v-on:click="setActive('prod-mele')"
-              :class="[activeItem == 'prod-mele' ? 'active' : 'notActive']"
-              v-if="esteFirma && rolUtilizator == 'firma'"
-            >
-              <router-link to="/produsemanager">Produsele mele</router-link>
-            </li>
-            <li
-              class="dropdown-item"
-              v-on:click="setActive('rez-mele')"
-              :class="[activeItem == 'rez-mele' ? 'active' : 'notActive']"
-              v-if="!esteFirma && rolUtilizator == 'user'"
-            >
-              <router-link to="/rezervariuser">Rezervările mele</router-link>
-            </li>
             <li
               class="dropdown-item"
               v-on:click="setActive('profil')"
@@ -161,6 +176,9 @@ export default {
 };
 </script>
 <style scoped lang="scss">
+* {
+  font-family: "Raleway", sans-serif;
+}
 .logo {
   width: 80px;
   margin-left: 30%;

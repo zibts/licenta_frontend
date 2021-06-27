@@ -119,7 +119,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 * {
   font-family: "Raleway", sans-serif;
 }

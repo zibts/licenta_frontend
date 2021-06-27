@@ -9,14 +9,9 @@
                 class="d-flex flex-row flex-wrap justify-content-center"
                 style="margin-top: 20px; margin-bottom: 20px"
               >
-                <img
-                  src="../assets/company_logo.png"
-                  alt="Admin"
-                  class="rounded-circle align-self-center"
-                  width="150"
-                />
+                <div id="#photoDiv" :style="getPhotos(user.img)"></div>
                 <div class="d-flex flex-column">
-                  <h4>
+                  <h4 style="margin-top: 30px">
                     {{ user.utilizator.nume }}, {{ user.utilizator.prenume[0] }}
                   </h4>
                   <div class="mt-3 buttons">
@@ -75,10 +70,29 @@
 <script>
 export default {
   props: ["user"],
+  methods: {
+    getPhotos(filename) {
+      // return { backgroundColor: "yellow", height: "200px" };
+      return {
+        backgroundImage: `url("/assets/products/${filename}")`,
+        height: "200px",
+        width: "200px",
+        backgroundSize: "cover",
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "center center",
+        borderRadius: "100px",
+        border: "1px solid #27ae60 ",
+        boxShadow: " inset 0px 0px 10px 1px rgba(0,0,0,0.2)",
+      };
+    },
+  },
 };
 </script>
 
 <style scoped>
+* {
+  font-family: "Raleway", sans-serif;
+}
 h4 {
   font-family: "Raleway", sans-serif;
   font-size: 36px;
